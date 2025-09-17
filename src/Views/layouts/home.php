@@ -220,7 +220,7 @@ use App\Services\Language;
                 <img src="./assets/images/home-automation-icon.svg" alt="home automation icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
-                <h4 class="h4 service-item-title"><?= Language::get('service.domotique.title') ?></h4>
+                <h3 class="h3 service-item-title"><?= Language::get('service.domotique.title') ?></h3>
                 <p class="service-item-text">
                   <?= Language::get('service.domotique.desc') ?>
                 </p>
@@ -231,7 +231,7 @@ use App\Services\Language;
                 <img src="./assets/images/web-development-icon.svg" alt="Web development icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
-                <h4 class="h4 service-item-title"><?= Language::get('service.webdev.title') ?></h4>
+                <h3 class="h3 service-item-title"><?= Language::get('service.webdev.title') ?></h3>
                 <p class="service-item-text">
                   <?= Language::get('service.webdev.desc') ?>
                 </p>
@@ -242,7 +242,7 @@ use App\Services\Language;
                 <img src="./assets/images/mobile-applications-icon.svg" alt="mobile app icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
-                <h4 class="h4 service-item-title"><?= Language::get('service.mobile.title') ?></h4>
+                <h3 class="h3 service-item-title"><?= Language::get('service.mobile.title') ?></h3>
                 <p class="service-item-text">
                   <?= Language::get('service.mobile.desc') ?>
                 </p>
@@ -253,7 +253,7 @@ use App\Services\Language;
                 <img src="./assets/images/java-development-icon.svg" alt="java development icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
-                <h4 class="h4 service-item-title"><?= Language::get('service.java.title') ?></h4>
+                <h3 class="h3 service-item-title"><?= Language::get('service.java.title') ?></h3>
                 <p class="service-item-text">
                   <?= Language::get('service.java.desc') ?>
                 </p>

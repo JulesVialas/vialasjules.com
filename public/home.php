@@ -27,7 +27,7 @@ use App\Services\Language;
   <meta property="og:url" content="https://vialasjules.com/">
   <meta property="og:title" content="Jules Vialas - <?= Language::get('title.developer') ?>">
   <meta property="og:description" content="<?= Language::get('about.description') ?>">
-  <meta property="og:image" content="https://vialasjules.com/assets/images/hero.jpeg">
+  <meta property="og:image" content="https://vialasjules.com/assets/images/hero.webp">
   <meta property="og:site_name" content="Jules Vialas Portfolio">
   <meta property="og:locale" content="<?= Language::getCurrentLanguage() === 'fr' ? 'fr_FR' : 'en_US' ?>">
   
@@ -36,7 +36,7 @@ use App\Services\Language;
   <meta property="twitter:url" content="https://vialasjules.com/">
   <meta property="twitter:title" content="Jules Vialas - <?= Language::get('title.developer') ?>">
   <meta property="twitter:description" content="<?= Language::get('about.description') ?>">
-  <meta property="twitter:image" content="https://vialasjules.com/assets/images/hero.jpeg">
+  <meta property="twitter:image" content="https://vialasjules.com/assets/images/hero.webp">
   
   <!-- Hreflang for multilingual -->
   <link rel="alternate" hreflang="fr" href="https://vialasjules.com/?lang=fr">
@@ -63,7 +63,7 @@ use App\Services\Language;
     "jobTitle": "<?= Language::get('title.developer') ?>",
     "description": "<?= Language::get('about.description') ?>",
     "url": "https://vialasjules.com",
-    "image": "https://vialasjules.com/assets/images/hero.jpeg",
+    "image": "https://vialasjules.com/assets/images/hero.webp",
     "email": "jules.vialas@gmail.com",
     "telephone": "+33781573531",
     "birthDate": "2005-11-16",
@@ -112,7 +112,7 @@ use App\Services\Language;
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
         <figure class="avatar-box">
-          <img src="./assets/images/hero.jpeg" alt="Jules Vialas" width="80" height="80">
+          <img src="./assets/images/hero.webp" alt="Jules Vialas" width="80" height="80">
         </figure>
         <div class="info-content">
           <h1 class="name" title="Jules Vialas">Jules Vialas</h1>
@@ -261,7 +261,7 @@ use App\Services\Language;
           <ul class="clients-list has-scrollbar">
             <li class="clients-item">
               <a href="https://www.subterra.fr" target="_blank" rel="noopener noreferrer">
-                <img src="../../assets/images/logo-subterra.png" alt="Subterra logo">
+                <img src="../../assets/images/logo-subterra.webp" alt="Subterra logo">
               </a>
             </li>
           </ul>

@@ -344,7 +344,7 @@ main {
 }
 
 .contact-title {
-  color: var(--text-gray-light);
+  color: var(--text-medium);
   font-size: var(--fs-8);
   text-transform: uppercase;
   margin-bottom: 2px;
