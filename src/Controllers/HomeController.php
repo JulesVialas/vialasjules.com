@@ -1,26 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
 /**
- * Contrôleur pour la page d'accueil.
- * 
- * Gère l'affichage de la page principale du site web.
- * 
- * @package App\Controllers
- * @author Jules Vialas
- * @version 1.0.0
+ * Home Controller
+ * Handles the main page display and related actions
  */
-class HomeController {
+class HomeController
+{
+    public function index(): void
+    {
+        $this->renderView('layouts/home');
+    }
     
-    /**
-     * Affiche la page d'accueil.
-     * 
-     * Inclut le template de la page d'accueil depuis les vues.
-     * 
-     * @return void
-     */
-    public function get(): void {
-        include __DIR__ . '/../Views/layouts/home.php';
+    private function renderView(string $viewPath): void
+    {
+        $fullPath = __DIR__ . '/../Views/' . $viewPath . '.php';
+        
+        if (!file_exists($fullPath)) {
+            throw new \InvalidArgumentException("View file not found: {$fullPath}");
+        }
+        
+        include $fullPath;
     }
 }
