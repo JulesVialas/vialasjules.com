@@ -1,60 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-/**
- * Routeur HTTP simple pour l'application.
- * 
- * Permet de définir des routes GET/POST avec des paramètres d'URL
- * et de les dispatcher vers des callbacks ou des contrôleurs.
- * 
- * @package App\Services
- * @author Jules Vialas
- * @version 1.0.0
- */
-class Router {
+use InvalidArgumentException;
 
-    /**
-     * Tableau des routes enregistrées.
-     * 
-     * @var array<int, array{method:string,pattern:string,callback:callable}>
-     */
+/**
+ * HTTP Router
+ * Simple router for handling GET/POST routes with URL parameters
+ */
+class Router
+{
+    private const SUPPORTED_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
+    
+    /** @var array<array{method: string, pattern: string, callback: callable}> */
     private array $routes = [];
 
-    /**
-     * Ajoute une route GET.
-     * 
-     * @param string $pattern Le chemin avec placeholders (ex: /user/{id})
-     * @param callable $callback La fonction ou méthode à appeler
-     * @return void
-     */
-    public function get(string $pattern, callable $callback): void {
+    public function get(string $pattern, callable $callback): void
+    {
         $this->add('GET', $pattern, $callback);
     }
 
-    /**
-     * Ajoute une route POST.
-     * 
-     * @param string $pattern Le chemin avec placeholders (ex: /form)
-     * @param callable $callback La fonction ou méthode à appeler
-     * @return void
-     */
-    public function post(string $pattern, callable $callback): void {
+    public function post(string $pattern, callable $callback): void
+    {
         $this->add('POST', $pattern, $callback);
     }
 
-    /**
-     * Enregistre une route interne.
-     * 
-     * Convertit les paramètres {nom} en regex pour matcher l'URL.
-     * 
-     * @param string $method Méthode HTTP (GET|POST)
-     * @param string $pattern Le chemin avec placeholders
-     * @param callable $callback La fonction ou méthode à exécuter
-     * @return void
-     */
-    private function add(string $method, string $pattern, callable $callback): void {
+    public function put(string $pattern, callable $callback): void
+    {
+        $this->add('PUT', $pattern, $callback);
+    }
+
+    public function delete(string $pattern, callable $callback): void
+    {
+        $this->add('DELETE', $pattern, $callback);
+    }
+
+    private function add(string $method, string $pattern, callable $callback): void
+    {
+        if (!in_array($method, self::SUPPORTED_METHODS, true)) {
+            throw new InvalidArgumentException("Unsupported HTTP method: {$method}");
+        }
+        
         $regex = '#^' . preg_replace('#\{(\w+)\}#', '([^/]+)', $pattern) . '$#';
+        
         $this->routes[] = [
             'method' => $method,
             'pattern' => $regex,
@@ -62,25 +52,32 @@ class Router {
         ];
     }
 
-    /**
-     * Dispatche une requête vers la route correspondante.
-     * 
-     * Parcourt les routes enregistrées et exécute le callback correspondant
-     * à l'URI et la méthode HTTP. Retourne une erreur 404 si aucune route ne correspond.
-     * 
-     * @param string $uri L'URI demandée (ex: /user/42)
-     * @param string $method Méthode HTTP (GET|POST)
-     * @return void
-     */
-    public function dispatch(string $uri, string $method): void {
+    public function dispatch(string $uri, string $method): void
+    {
+        $method = strtoupper($method);
+        
         foreach ($this->routes as $route) {
             if ($method === $route['method'] && preg_match($route['pattern'], $uri, $matches)) {
-                array_shift($matches);
-                call_user_func_array($route['callback'], $matches);
+                array_shift($matches); // Remove full match
+                
+                try {
+                    call_user_func_array($route['callback'], $matches);
+                } catch (\Throwable $e) {
+                    error_log("Route callback error: " . $e->getMessage());
+                    $this->sendErrorResponse(500, 'Internal Server Error');
+                }
                 return;
             }
         }
-        http_response_code(404);
-        echo '404 Not Found';
+        
+        $this->sendErrorResponse(404, 'Page Not Found');
+    }
+    
+    private function sendErrorResponse(int $code, string $message): void
+    {
+        http_response_code($code);
+        
+        // In production, you might want to include a proper error template
+        echo "<h1>{$code}</h1><p>{$message}</p>";
     }
 }
