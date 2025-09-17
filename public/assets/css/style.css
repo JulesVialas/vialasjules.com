@@ -260,13 +260,15 @@ main {
 
 .avatar-box {
   background: var(--bg-gradient-light);
-  border-radius: 20px;
+  border-radius: 50%; /* Rendre le conteneur rond */
 }
 
 .avatar-box img {
-  border-radius: 15px;
+  border-radius: 50%; /* Rendre l'image ronde */
   width: 100%;
   height: auto;
+  object-fit: cover; /* S'assurer que l'image remplit bien le cercle */
+  aspect-ratio: 1; /* Forcer un ratio 1:1 pour un cercle parfait */
 }
 
 .info-content .name {
@@ -1083,7 +1085,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { gap: 25px; }
 
-  .avatar-box { border-radius: 30px; }
+  .avatar-box { border-radius: 50%; } /* Maintenir la forme ronde sur tablette/desktop */
 
   .avatar-box img { width: 120px; }
 
