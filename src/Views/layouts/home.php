@@ -266,7 +266,7 @@ use App\Services\Language;
           <ul class="clients-list has-scrollbar">
             <li class="clients-item">
               <a href="https://www.subterra.fr" target="_blank" rel="noopener noreferrer">
-                <img src="../../assets/images/logo-subterra.png" alt="Subterra logo" loading="lazy">
+                <img src="../../assets/images/logo-subterra.webp" alt="Subterra logo" loading="lazy">
               </a>
             </li>
           </ul>
