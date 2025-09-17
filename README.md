@@ -1,53 +1,152 @@
-# 🌐 vialasjules.com
+# Jules Vialas - Portfolio
 
-> Site web personnel de Jules Vialas - Portfolio et présentation professionnelle
+> Site web personnel et portfolio de Jules Vialas, développeur informatique
 
-[![PHP Version](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=flat-square&logo=php)](https://php.net)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.8-7952B3?style=flat-square&logo=bootstrap)](https://getbootstrap.com)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+## 🚀 Aperçu
 
-## 📋 Table des matières
-
-- [À propos](#-à-propos)
-- [Fonctionnalités](#-fonctionnalités)
-- [Structure du projet](#-structure-du-projet)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Utilisation](#-utilisation)
-- [Architecture](#-architecture)
-- [Technologies](#-technologies)
-- [Déploiement](#-déploiement)
-- [Contribution](#-contribution)
-- [Licence](#-licence)
-
-## 🎯 À propos
-
-Site web personnel développé en PHP vanilla avec une architecture MVC simple. Le site présente mon profil professionnel et mes projets avec un système multilingue français/anglais.
-
-### Caractéristiques principales
-
-- **Multilingue** : Support français/anglais avec persistance
-- **Responsive** : Interface adaptative mobile/desktop
-- **Performance** : Code optimisé et structure légère
-- **SEO** : Optimisé pour les moteurs de recherche
-- **Sécurité** : Séparation public/privé, validation des entrées
+Portfolio personnel développé en PHP vanilla avec une architecture MVC simple et moderne. Le site présente mon profil professionnel, mes compétences et mes projets avec un système multilingue français/anglais.
 
 ## ✨ Fonctionnalités
 
-### 🌍 Système multilingue
-- Détection automatique de la langue
-- Persistance via sessions et cookies
-- Changement de langue en temps réel
-- URLs localisées
+- **🌍 Multilingue** : Support français/anglais avec changement en temps réel
+- **📱 Responsive** : Interface adaptative pour tous les appareils
+- **⚡ Performance** : Code optimisé et structure légère
+- **🔧 MVC** : Architecture claire et maintenable
+- **🎨 Modern UI** : Design moderne avec animations fluides
 
-### 📱 Interface utilisateur
-- Design responsive Bootstrap 5
-- Navigation intuitive
-- Animations fluides
-- Accessibilité optimisée
+## �️ Technologies
 
-### 🔧 Architecture technique
-- Routeur personnalisé avec paramètres
+- **Backend** : PHP 8.1+ (vanilla)
+- **Frontend** : HTML5, CSS3, JavaScript ES6+
+- **Architecture** : MVC personnalisé
+- **Styles** : CSS Variables, Flexbox, Grid
+- **Icons** : Ionicons
+- **Fonts** : Google Fonts (Poppins)
+
+## 📁 Structure du projet
+
+```
+vialasjules.com/
+├── public/
+│   ├── index.php          # Point d'entrée
+│   └── assets/
+│       ├── css/style.css  # Styles principaux
+│       ├── js/script.js   # JavaScript
+│       └── images/        # Images et médias
+└── src/
+    ├── Autoloader.php     # Autoloader PSR-4
+    ├── Controllers/       # Contrôleurs
+    ├── Services/          # Services (Router, Language)
+    └── Views/             # Vues et templates
+```
+
+## 🚀 Installation
+
+1. **Cloner le projet**
+   ```bash
+   git clone https://github.com/JulesVialas/vialasjules.com.git
+   cd vialasjules.com
+   ```
+
+2. **Serveur local**
+   ```bash
+   # Avec PHP intégré
+   php -S localhost:8000 -t public/
+   
+   # Ou avec un serveur web (Apache/Nginx)
+   # Pointez le document root vers le dossier 'public/'
+   ```
+
+3. **Accéder au site**
+   ```
+   http://localhost:8000
+   ```
+
+## ⚙️ Configuration
+
+### Serveur Web
+
+- **Document Root** : `/public`
+- **PHP Version** : 8.1+
+- **Extensions requises** : Aucune dépendance externe
+
+### Variables d'environnement
+
+Le projet fonctionne sans configuration supplémentaire. Les langues sont gérées automatiquement via :
+- Paramètre URL : `?lang=fr` ou `?lang=en`
+- Session PHP
+- Cookie persistant
+
+## 📝 Utilisation
+
+### Changement de langue
+```javascript
+// Via JavaScript
+window.location.href = '?lang=en';
+
+// Via URL directe
+https://votre-domain.com/?lang=fr
+```
+
+### Ajout de nouvelles traductions
+Modifier le fichier `src/Services/Language.php` :
+```php
+'nouvelle.cle' => 'Nouvelle traduction',
+```
+
+## 🔧 Développement
+
+### Standards de code
+- **PHP** : PSR-4 (Autoloading), PSR-12 (Coding Style)
+- **JavaScript** : ES6+, Modern practices
+- **CSS** : BEM-like methodology, CSS Variables
+
+### Architecture
+- **Autoloader personnalisé** : PSR-4 compatible
+- **Router simple** : Support GET/POST avec paramètres
+- **Services** : Langage, routing
+- **Contrôleurs** : Logique de présentation
+- **Vues** : Templates PHP simples
+
+## 📱 Responsive Design
+
+- **Mobile First** : Design optimisé mobile
+- **Breakpoints** :
+  - Mobile : < 580px
+  - Tablet : 580px - 768px
+  - Desktop : > 768px
+
+## 🎨 Personnalisation
+
+### Couleurs
+Modifier les variables CSS dans `public/assets/css/style.css` :
+```css
+:root {
+  --accent-color: hsl(210, 100%, 45%);
+  --background-light: hsl(0, 0%, 95%);
+  /* ... */
+}
+```
+
+### Contenu
+- **Traductions** : `src/Services/Language.php`
+- **Images** : `public/assets/images/`
+- **Template principal** : `src/Views/layouts/home.php`
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## � Auteur
+
+**Jules Vialas**
+- Email : jules.vialas@gmail.com
+- GitHub : [@JulesVialas](https://github.com/JulesVialas)
+- Site web : [vialasjules.com](https://vialasjules.com)
+
+---
+
+💡 **Développé avec passion à Toulouse, France**
 - Système de vues modulaire
 - Service de traduction centralisé
 - Code documenté avec PHPDoc
