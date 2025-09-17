@@ -115,7 +115,7 @@ use App\Services\Language;
           <img src="./assets/images/hero.jpeg" alt="Jules Vialas" width="80" height="80">
         </figure>
         <div class="info-content">
-          <h2 class="name" title="Jules Vialas">Jules Vialas</h2>
+          <h1 class="name" title="Jules Vialas">Jules Vialas</h1>
           <p class="title"><?= Language::get('title.developer') ?></p>
         </div>
         <button class="info_more-btn" data-sidebar-btn>
@@ -200,7 +200,7 @@ use App\Services\Language;
       </nav>
       <article class="about  active" data-page="about">
         <header>
-          <h1 class="h2 article-title"><?= Language::get('about.title') ?></h1>
+          <h2 class="h2 article-title"><?= Language::get('about.title') ?></h2>
         </header>
         <section class="about-text">
           <p>

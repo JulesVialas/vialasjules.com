@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://vialasjules.com/sitemap.xml
+
+# Disallow specific files if needed
+Disallow: /src/
+Disallow: /.git/
+Disallow: /vendor/
