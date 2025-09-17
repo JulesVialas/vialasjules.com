@@ -1,0 +1,12 @@
+# Redirection automatique vers le dossier public
+RewriteEngine On
+
+# Rediriger toutes les requêtes vers le dossier public
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /public/$1 [L,QSA]
+
+# Redirection spéciale pour la racine
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ /public/ [L]

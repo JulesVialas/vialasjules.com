@@ -91,12 +91,12 @@ use App\Services\Language;
         <div class="separator"></div>
         <ul class="social-list">
           <li class="social-item">
-            <a href="#" class="social-link">
+            <a href="https://www.linkedin.com/in/julesvialas" class="social-link">
               <ion-icon name="logo-linkedin"></ion-icon>
             </a>
           </li>
           <li class="social-item">
-            <a href="#" class="social-link">
+            <a href="https://github.com/JulesVialas" class="social-link">
               <ion-icon name="logo-github"></ion-icon>
             </a>
           </li>
