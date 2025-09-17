@@ -46,13 +46,18 @@ use App\Services\Language;
   <!-- Favicon -->
   <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
   
+  <!-- Preload critical resources -->
+  <link rel="preload" href="./assets/css/style.css" as="style">
+  <link rel="preload" href="./assets/images/hero.jpeg" as="image" media="(max-width: 768px)">
+  
   <!-- Stylesheets -->
   <link rel="stylesheet" href="./assets/css/style.css">
   
-  <!-- Fonts -->
+  <!-- Fonts - Optimized loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"></noscript>
   
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -112,7 +117,7 @@ use App\Services\Language;
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
         <figure class="avatar-box">
-          <img src="./assets/images/hero.jpeg" alt="Jules Vialas" width="80" height="80">
+          <img src="./assets/images/hero.jpeg" alt="Jules Vialas" width="80" height="80" loading="eager">
         </figure>
         <div class="info-content">
           <h2 class="name" title="Jules Vialas">Jules Vialas</h2>
@@ -208,11 +213,11 @@ use App\Services\Language;
           </p>
         </section>
         <section class="service">
-          <h3 class="h3 service-title"><?= Language::get('services.title') ?></h3>
+          <h2 class="h2 service-title"><?= Language::get('services.title') ?></h2>
           <ul class="service-list">
             <li class="service-item">
               <div class="service-icon-box">
-                <img src="./assets/images/home-automation-icon.svg" alt="home automation icon" width="40">
+                <img src="./assets/images/home-automation-icon.svg" alt="home automation icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
                 <h4 class="h4 service-item-title"><?= Language::get('service.domotique.title') ?></h4>
@@ -223,7 +228,7 @@ use App\Services\Language;
             </li>
             <li class="service-item">
               <div class="service-icon-box">
-                <img src="./assets/images/web-development-icon.svg" alt="Web development icon" width="40">
+                <img src="./assets/images/web-development-icon.svg" alt="Web development icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
                 <h4 class="h4 service-item-title"><?= Language::get('service.webdev.title') ?></h4>
@@ -234,7 +239,7 @@ use App\Services\Language;
             </li>
             <li class="service-item">
               <div class="service-icon-box">
-                <img src="./assets/images/mobile-applications-icon.svg" alt="mobile app icon" width="40">
+                <img src="./assets/images/mobile-applications-icon.svg" alt="mobile app icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
                 <h4 class="h4 service-item-title"><?= Language::get('service.mobile.title') ?></h4>
@@ -245,7 +250,7 @@ use App\Services\Language;
             </li>
             <li class="service-item">
               <div class="service-icon-box">
-                <img src="./assets/images/java-development-icon.svg" alt="java development icon" width="40">
+                <img src="./assets/images/java-development-icon.svg" alt="java development icon" width="40" loading="lazy">
               </div>
               <div class="service-content-box">
                 <h4 class="h4 service-item-title"><?= Language::get('service.java.title') ?></h4>
@@ -257,11 +262,11 @@ use App\Services\Language;
           </ul>
         </section>
         <section class="clients">
-          <h3 class="h3 clients-title"><?= Language::get('clients.title') ?></h3>
+          <h2 class="h2 clients-title"><?= Language::get('clients.title') ?></h2>
           <ul class="clients-list has-scrollbar">
             <li class="clients-item">
               <a href="https://www.subterra.fr" target="_blank" rel="noopener noreferrer">
-                <img src="../../assets/images/logo-subterra.png" alt="Subterra logo">
+                <img src="../../assets/images/logo-subterra.png" alt="Subterra logo" loading="lazy">
               </a>
             </li>
           </ul>
@@ -357,7 +362,7 @@ use App\Services\Language;
     </div>
   </main>
   <script src="./assets/js/script.js"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" async></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" defer></script>
 </body>
 </html>
