@@ -239,12 +239,16 @@ main {
 
 .sidebar {
   margin-bottom: 15px;
-  max-height: 112px;
-  overflow: hidden;
+  /* max-height: 112px; - Supprimé pour afficher tout le contenu */
+  /* overflow: hidden; - Supprimé pour permettre l'affichage complet */
   transition: var(--transition-2);
 }
 
-.sidebar.active { max-height: 405px; }
+/* Supprimé - plus besoin de max-height en mode actif
+.sidebar.active { 
+  max-height: 500px;
+  overflow-y: auto;
+} */
 
 .sidebar-info {
   position: relative;
@@ -284,6 +288,7 @@ main {
 }
 
 .info_more-btn {
+  display: none; /* Masquer le bouton car les infos sont toujours visibles */
   position: absolute;
   top: -15px;
   right: -15px;
@@ -315,15 +320,16 @@ main {
 .info_more-btn span { display: none; }
 
 .sidebar-info_more {
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1; /* Toujours visible */
+  visibility: visible; /* Toujours visible */
   transition: var(--transition-2);
 }
 
+/* Plus besoin de cette règle car la section est toujours visible
 .sidebar.active .sidebar-info_more {
   opacity: 1;
   visibility: visible;
-}
+} */
 
 .contacts-list {
   display: grid;
@@ -1065,11 +1071,15 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .sidebar {
-    max-height: 180px;
+    /* max-height: 180px; - Supprimé pour afficher tout le contenu */
     margin-bottom: 30px;
   }
 
-  .sidebar.active { max-height: 584px; }
+  /* Plus besoin de max-height en mode actif - tout est toujours visible
+  .sidebar.active { 
+    max-height: 700px;
+    overflow-y: auto;
+  } */
 
   .sidebar-info { gap: 25px; }
 
