@@ -18,7 +18,9 @@ session_start();
 require_once __DIR__ . '/../src/Autoloader.php';
 
 $autoloader = new Autoloader();
+
 $autoloader->addNamespace('App', __DIR__ . '/../src');
+$autoloader->addNamespace('Celcat', __DIR__ . '/../src/Services');
 $autoloader->register();
 
 use App\Services\Language;
