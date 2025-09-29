@@ -62,7 +62,8 @@ class EmploiDuTempsControleur
             echo $ics;
         } catch (\Exception $e) {
             http_response_code(500);
-            echo "Erreur : " . $e->getMessage();
+            echo "Erreur : " . $e->getMessage() . "\n";
+            echo "<pre>" . print_r($e, true) . "</pre>";
         }
     }
 
