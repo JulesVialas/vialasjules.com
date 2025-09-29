@@ -18,13 +18,9 @@ class CelcatService
      */
     public function fetchEvents(string $fid, string $start = null, string $end = null): array
     {
-        $start = $start ?? date('Y-m-01'); // début du mois
-        $end   = $end   ?? date('Y-m-t');  // fin du mois
+        $start = $start ?? date('Y-m-01');
+        $end   = $end   ?? date('Y-m-t');
 
-        // Étape 1 : récupérer les cookies de session via login
-        $cookies = $this->loginAndGetCookies();
-
-        // Étape 2 : faire le POST pour GetCalendarData
         $url = "https://edt.univ-tlse3.fr/calendar/Home/GetCalendarData";
         $postData = http_build_query([
             'start' => $start,
@@ -48,13 +44,17 @@ class CelcatService
             'Origin: https://edt.univ-tlse3.fr',
             'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15'
         ]);
-        curl_setopt($ch, CURLOPT_COOKIE, $cookies);
+
+        // Si login/mot de passe fournis, on utilise les cookies, sinon mode public
+        if (!empty($this->username) && !empty($this->password)) {
+            $cookies = $this->loginAndGetCookies();
+            curl_setopt($ch, CURLOPT_COOKIE, $cookies);
+        }
 
         $response = curl_exec($ch);
         if ($response === false) {
             throw new \Exception('Erreur cURL : ' . curl_error($ch));
         }
-
         curl_close($ch);
 
         $data = json_decode($response, true);

@@ -19,7 +19,7 @@ class EmploiDuTempsControleur
         $celcatUrl = $_GET['celcat_url'];
 
         try {
-            // On accepte l'URL HTML du calendrier et on extrait les paramètres
+            // Extraction des paramètres depuis l'URL HTML du calendrier
             $matches = [];
             preg_match('/fid0=([0-9]+)/', $celcatUrl, $matches);
             $fid = $matches[1] ?? null;
@@ -32,44 +32,23 @@ class EmploiDuTempsControleur
                 return;
             }
 
-            // Calcul de la date de fin (fin du mois courant)
             $start = $dt;
             $end = date('Y-m-t', strtotime($dt));
 
-            // Construction des paramètres POST pour GetCalendarData
-            $postData = http_build_query([
-                'start' => $start,
-                'end' => $end,
-                'resType' => 104,
-                'calView' => 'month',
-                'federationIds[]' => $fid,
-                'colourScheme' => 3
-            ]);
+            // Récupération des identifiants via fichier de config
+            require_once __DIR__ . '/../config.celcat.php';
+            $username = defined('CELCAT_USERNAME') ? CELCAT_USERNAME : '';
+            $password = defined('CELCAT_PASSWORD') ? CELCAT_PASSWORD : '';
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'https://edt.univ-tlse3.fr/calendar/Home/GetCalendarData');
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With: XMLHttpRequest',
-                'Accept: application/json, text/javascript, */*; q=0.01',
-                'Referer: ' . $celcatUrl,
-                'Origin: https://edt.univ-tlse3.fr',
-                'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15'
-            ]);
-
-            $json = curl_exec($ch);
-            if ($json === false) {
-                http_response_code(400);
-                echo "Erreur lors de la récupération des données CELCAT : " . curl_error($ch);
-                curl_close($ch);
+            if (empty($username) || empty($password)) {
+                http_response_code(401);
+                echo "Identifiants CELCAT manquants. Vérifiez src/config.celcat.php.";
                 return;
             }
-            curl_close($ch);
 
-            $events = json_decode($json, true);
+            $service = new \Celcat\CelcatService($username, $password);
+            $events = $service->fetchEvents($fid, $start, $end);
+
             if (!is_array($events)) {
                 http_response_code(400);
                 echo "Format de données invalide (JSON attendu).";
