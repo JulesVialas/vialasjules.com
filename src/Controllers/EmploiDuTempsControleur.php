@@ -12,33 +12,67 @@ class EmploiDuTempsControleur
     public function convert(): void
     {
         if (!isset($_GET['celcat_url']) || empty($_GET['celcat_url'])) {
-            // Affiche le formulaire si pas d'URL
             $this->renderView('layouts/emploi-du-temps');
             return;
         }
 
         $celcatUrl = $_GET['celcat_url'];
 
-        // Mode public : on tente de récupérer le JSON directement depuis l'URL fournie
         try {
-            // Si l'URL est un endpoint JSON (GetCalendarData), on fait un GET direct
-            if (strpos($celcatUrl, 'GetCalendarData') !== false) {
-                $json = file_get_contents($celcatUrl);
-                if ($json === false) {
-                    http_response_code(400);
-                    echo "Impossible de récupérer les données depuis l'URL fournie.";
-                    return;
-                }
-                $events = json_decode($json, true);
-                if (!is_array($events)) {
-                    http_response_code(400);
-                    echo "Format de données invalide (JSON attendu).";
-                    return;
-                }
-            } else {
-                // Si l'URL est celle du calendrier HTML, on affiche une erreur explicite
+            // On accepte l'URL HTML du calendrier et on extrait les paramètres
+            $matches = [];
+            preg_match('/fid0=([0-9]+)/', $celcatUrl, $matches);
+            $fid = $matches[1] ?? null;
+            preg_match('/dt=([0-9\-]+)/', $celcatUrl, $matches);
+            $dt = $matches[1] ?? date('Y-m-01');
+
+            if (!$fid) {
                 http_response_code(400);
-                echo "L'URL fournie doit pointer vers le endpoint JSON (GetCalendarData).";
+                echo "Impossible d'extraire le paramètre fid0 de l'URL.";
+                return;
+            }
+
+            // Calcul de la date de fin (fin du mois courant)
+            $start = $dt;
+            $end = date('Y-m-t', strtotime($dt));
+
+            // Construction des paramètres POST pour GetCalendarData
+            $postData = http_build_query([
+                'start' => $start,
+                'end' => $end,
+                'resType' => 104,
+                'calView' => 'month',
+                'federationIds[]' => $fid,
+                'colourScheme' => 3
+            ]);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://edt.univ-tlse3.fr/calendar/Home/GetCalendarData');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With: XMLHttpRequest',
+                'Accept: application/json, text/javascript, */*; q=0.01',
+                'Referer: ' . $celcatUrl,
+                'Origin: https://edt.univ-tlse3.fr',
+                'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15'
+            ]);
+
+            $json = curl_exec($ch);
+            if ($json === false) {
+                http_response_code(400);
+                echo "Erreur lors de la récupération des données CELCAT : " . curl_error($ch);
+                curl_close($ch);
+                return;
+            }
+            curl_close($ch);
+
+            $events = json_decode($json, true);
+            if (!is_array($events)) {
+                http_response_code(400);
+                echo "Format de données invalide (JSON attendu).";
                 return;
             }
 
