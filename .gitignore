@@ -28,4 +28,4 @@ tmp/
 
 # Build outputs
 dist/
-build/
+build/src/config.celcat.php
